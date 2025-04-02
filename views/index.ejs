@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SecretShare Hub</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #4361ee;
+            --secondary-color: #3a0ca3;
+            --accent-color: #4cc9f0;
+            --success-color: #10b981;
+            --warning-color: #ef476f;
+            --neutral-color: #f8f9fa;
+            --dark-color: #1e1e2c;
+            --light-color: #ffffff;
+            --border-radius: 8px;
+            --box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(120deg, #f8f9fa 0%, #e9ecef 100%);
+            color: var(--dark-color);
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            background-image: url('https://www.transparenttextures.com/patterns/cubes.png');
+        }
+        
+        .header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: var(--light-color);
+            padding: 20px 0;
+            text-align: center;
+            box-shadow: var(--box-shadow);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .header::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' fill='%23ffffff' fill-opacity='0.05' fill-rule='evenodd'/%3E%3C/svg%3E");
+            opacity: 0.8;
+        }
+        
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .header-title {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            letter-spacing: 1px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .header-title i {
+            margin-right: 15px;
+            font-size: 2.2rem;
+        }
+        
+        .header-subtitle {
+            font-size: 1.1rem;
+            font-weight: 300;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 20px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+        
+        .card {
+            background: var(--light-color);
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            padding: 30px;
+            transition: var(--transition);
+            border-top: 4px solid var(--primary-color);
+        }
+        
+        .card:hover {
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+            transform: translateY(-3px);
+        }
+        
+        .card-title {
+            font-size: 1.5rem;
+            color: var(--primary-color);
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--neutral-color);
+            display: flex;
+            align-items: center;
+        }
+        
+        .card-title i {
+            margin-right: 10px;
+            color: var(--accent-color);
+        }
+        
+        .parameters {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+        
+        .param-group {
+            margin-bottom: 15px;
+        }
+        
+        .heading h2 {
+            font-size: 1.2rem;
+            color: var(--secondary-color);
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .heading h2 i {
+            margin-right: 8px;
+            font-size: 1rem;
+        }
+        
+        .input input {
+            width: 100%;
+            padding: 10px 15px;
+            border: 1px solid #ddd;
+            border-radius: var(--border-radius);
+            font-size: 1rem;
+            font-family: 'Poppins', sans-serif;
+            transition: var(--transition);
+        }
+        
+        .input input:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 2px rgba(67, 97, 238, 0.2);
+            outline: none;
+        }
+        
+        .http-methods {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 20px;
+        }
+        
+        .http-btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: var(--border-radius);
+            background-color: var(--neutral-color);
+            color: var(--dark-color);
+            font-family: 'Poppins', sans-serif;
+            font-size: 0.95rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .http-btn:hover {
+            transform: translateY(-2px);
+        }
+        
+        .http-btn i {
+            margin-right: 8px;
+        }
+        
+        .http-btn.get {
+            background-color: #3498db;
+            color: white;
+        }
+        
+        .http-btn.post {
+            background-color: #2ecc71;
+            color: white;
+        }
+        
+        .http-btn.put {
+            background-color: #f39c12;
+            color: white;
+        }
+        
+        .http-btn.delete {
+            background-color: #e74c3c;
+            color: white;
+        }
+        
+        .http-btn.patch {
+            background-color: #9b59b6;
+            color: white;
+        }
+        
+        .response-section {
+            margin-top: 20px;
+        }
+        
+        .content {
+            background-color: var(--dark-color);
+            border-radius: var(--border-radius);
+            overflow: hidden;
+        }
+        
+        .response-header {
+            background-color: var(--accent-color);
+            color: var(--light-color);
+            padding: 10px 15px;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+        }
+        
+        .response-header i {
+            margin-right: 8px;
+        }
+        
+        pre {
+            margin: 0;
+            padding: 20px;
+            color: var(--neutral-color);
+            background-color: var(--dark-color);
+            font-family: 'Roboto Mono', monospace;
+            overflow-x: auto;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            line-height: 1.5;
+        }
+        
+        .footer {
+            background-color: var(--secondary-color);
+            color: var(--light-color);
+            text-align: center;
+            padding: 20px 0;
+            margin-top: auto;
+            box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .footer-text {
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+        
+        .api-info {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 25px;
+            margin-bottom: 25px;
+        }
+        
+        .api-info-item {
+            flex: 1;
+            min-width: 200px;
+            background: linear-gradient(120deg, rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 0.9));
+            border-radius: var(--border-radius);
+            padding: 15px;
+            box-shadow: var(--box-shadow);
+            border-left: 4px solid var(--primary-color);
+        }
+        
+        .api-info-title {
+            font-size: 1.1rem;
+            color: var(--secondary-color);
+            margin-bottom: 8px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+        }
+        
+        .api-info-title i {
+            margin-right: 8px;
+        }
+        
+        .api-info-text {
+            font-size: 0.9rem;
+            color: var(--dark-color);
+        }
+        
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .parameters {
+                grid-template-columns: 1fr;
+            }
+            
+            .http-methods {
+                flex-direction: column;
+            }
+            
+            .http-btn {
+                width: 100%;
+            }
+            
+            .header-title {
+                font-size: 2rem;
+            }
+        }
+        
+        /* Animation for highlighting JSON keys */
+        .key {
+            color: #f8c291;
+        }
+        
+        .string {
+            color: #78e08f;
+        }
+        
+        .number {
+            color: #c56cf0;
+        }
+        
+        .boolean {
+            color: #ffb8b8;
+        }
+        
+        /* Loading indicator */
+        .loading {
+            display: none;
+            justify-content: center;
+            margin: 20px 0;
+        }
+        
+        .loading-spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top: 4px solid var(--primary-color);
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* Lock icon animation */
+        .lock-icon {
+            display: inline-block;
+            animation: lockPulse 2s infinite;
+        }
+        
+        @keyframes lockPulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="header-content">
+            <h1 class="header-title"><i class="fas fa-user-secret lock-icon"></i> SecretShare Hub</h1>
+            <p class="header-subtitle">
+                Discover, create and manage secrets from users around the world
+            </p>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="api-info">
+            <div class="api-info-item">
+                <h3 class="api-info-title"><i class="fas fa-info-circle"></i> What is SecretShare?</h3>
+                <p class="api-info-text">
+                    Browse through 50+ user secrets, see their scores, usernames, and when they were created. You can also add your own secret to the collection!
+                </p>
+            </div>
+            <div class="api-info-item">
+                <h3 class="api-info-title"><i class="fas fa-key"></i> Your Account</h3>
+                <p class="api-info-text">
+                    Our system automatically creates an account for you using your unique token. You'll be able to manage secrets you've created yourself.
+                </p>
+            </div>
+            <div class="api-info-item">
+                <h3 class="api-info-title"><i class="fas fa-lightbulb"></i> How It Works</h3>
+                <p class="api-info-text">
+                    Use GET to view secrets, POST to create your own (username and ID will be auto-generated), and PUT/PATCH/DELETE to manage only your secrets.
+                </p>
+            </div>
+        </div>
+        
+        <div class="card">
+            <h2 class="card-title"><i class="fas fa-magic"></i> Secret Manager</h2>
+            
+            <form id="apiForm" method="POST">
+                <div class="parameters">
+                    <div class="id param-group">
+                        <div class="heading">
+                            <h2><i class="fas fa-fingerprint"></i> Secret ID</h2>
+                        </div>
+                        <div class="input">
+                            <input type="text" name="id" placeholder="Enter secret ID to view or modify">
+                        </div>
+                    </div>
+                    <div class="secret param-group">
+                        <div class="heading">
+                            <h2><i class="fas fa-user-secret"></i> Secret Message</h2>
+                        </div>
+                        <div class="input">
+                            <input type="text" name="secret" placeholder="Share your secret here">
+                        </div>
+                    </div>  
+                    <div class="score param-group">
+                        <div class="heading">
+                            <h2><i class="fas fa-star"></i> Secret Score</h2>
+                        </div>
+                        <div class="input">
+                            <input type="text" name="score" placeholder="Rate your secret (1-10)">
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="route param-group">
+                    <div class="heading">
+                        <h2><i class="fas fa-route"></i> Actions</h2>
+                    </div>
+                    <div class="http-methods">
+                        <button type="button" class="http-btn get" onclick="submitRequest('GET')">
+                            <i class="fas fa-search"></i> View Secret
+                        </button>
+                        <button type="button" class="http-btn post" onclick="submitRequest('POST')">
+                            <i class="fas fa-plus"></i> Create Secret
+                        </button>
+                        <button type="button" class="http-btn put" onclick="submitRequest('PUT')">
+                            <i class="fas fa-sync-alt"></i> Replace Secret
+                        </button>
+                        <button type="button" class="http-btn delete" onclick="submitRequest('DELETE')">
+                            <i class="fas fa-trash-alt"></i> Delete Secret
+                        </button>
+                        <button type="button" class="http-btn patch" onclick="submitRequest('PATCH')">
+                            <i class="fas fa-edit"></i> Update Secret
+                        </button>
+                    </div>  
+                </div>
+            </form>
+            
+            <div class="loading">
+                <div class="loading-spinner"></div>
+            </div>
+        </div>
+        
+        <div class="card response-section">
+            <h2 class="card-title"><i class="fas fa-reply"></i> Secret Details</h2>
+            <div class="content">
+                <div class="response-header">
+                    <i class="fas fa-scroll"></i> Secret Information
+                </div>
+                <pre id="responseData"><%= content %></pre>
+            </div>
+        </div>
+    </div>
+    
+    <footer class="footer">
+        <div class="footer-content">
+            <p class="footer-text">
+                <i class="fas fa-code"></i> SecretShare Hub | A place to share and discover secrets
+            </p>
+            <p class="footer-text">
+                &copy; <%= new Date().getFullYear() %> All Rights Reserved
+            </p>
+        </div>
+    </footer>
+    
+    <script>
+        function submitRequest(method) {
+            const form = document.getElementById('apiForm');
+            const loadingIndicator = document.querySelector('.loading');
+            
+            // Show loading indicator
+            loadingIndicator.style.display = 'flex';
+            
+            switch(method) {
+                case 'GET':
+                    // For GET requests, append ID as query parameter
+                    const id = document.querySelector('input[name="id"]').value;
+                    form.action = `/get?id=${id}`;
+                    form.method = 'GET';
+                    break;
+                case 'POST':
+                    form.action = '/post';
+                    form.method = 'POST';
+                    break;
+                case 'PUT':
+                    form.action = '/put';
+                    form.method = 'POST';
+                    break;
+                case 'DELETE':
+                    form.action = '/delete';
+                    form.method = 'POST';
+                    break;
+                case 'PATCH':
+                    form.action = '/patch';
+                    form.method = 'POST';
+                    break;
+            }
+            
+            // Submit the form after a short delay to show loading indicator
+            setTimeout(() => {
+                form.submit();
+            }, 300);
+        }
+        
+        // Format JSON in the response area
+        document.addEventListener('DOMContentLoaded', () => {
+            const pre = document.getElementById('responseData');
+            const content = pre.textContent;
+            
+            try {
+                // Check if content is valid JSON
+                const json = JSON.parse(content);
+                const formatted = JSON.stringify(json, null, 2);
+                
+                // Add syntax highlighting
+                const highlighted = formatted
+                    .replace(/"([^"]+)":/g, '<span class="key">"$1"</span>:')
+                    .replace(/: "([^"]+)"/g, ': <span class="string">"$1"</span>')
+                    .replace(/: ([0-9]+)/g, ': <span class="number">$1</span>')
+                    .replace(/: (true|false)/g, ': <span class="boolean">$1</span>');
+                
+                pre.innerHTML = highlighted;
+            } catch (e) {
+                // Not JSON, leave as is
+                console.log('Response is not valid JSON');
+            }
+            
+            // Add fade-in animation
+            pre.style.opacity = '0';
+            setTimeout(() => {
+                pre.style.transition = 'opacity 0.5s ease';
+                pre.style.opacity = '1';
+            }, 100);
+        });
+    </script>
+</body>
+</html>
